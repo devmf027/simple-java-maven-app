@@ -30,12 +30,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-
+      - uses: actions/checkout@v3 # Checkout the repository
       - name: Bump version and push tag
         id: tag_action
-        uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+        uses: anothrNick/github-tag-action@1.64.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: false
           DEFAULT_BUMP: patch
           INITIAL_VERSION: 1.0.0
@@ -51,11 +51,8 @@ jobs:
           git commit -m "Bump version to ${{ steps.tag_action.outputs.new_tag }}"
           git push
 
-
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-
-      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
