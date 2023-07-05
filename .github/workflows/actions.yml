@@ -44,6 +44,8 @@ jobs:
         run: mvn versions:set -DnewVersion=${{ steps.tag_action.outputs.new_tag }} -DgenerateBackupPoms=false
 
       - name: Commit and push new pom version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
