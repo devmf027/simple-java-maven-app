@@ -44,10 +44,11 @@ jobs:
         run: mvn versions:set -DnewVersion=${{ steps.tag_action.outputs.new_tag }} -DgenerateBackupPoms=false
 
       - name: Commit and push new pom version
-        run: =>
+        run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "New version ${{ steps.tag_action.outputs.new_tag }}" 
+          git add pom.xml
+          git commit -m "Bump version to ${{ steps.tag_action.outputs.new_tag }}"
           git push
 
 
