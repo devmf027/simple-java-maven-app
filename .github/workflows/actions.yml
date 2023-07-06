@@ -53,11 +53,11 @@ jobs:
         id: check_output
         run: |
           output=$(docker logs my-app-container)
-          if [[ "$output" == *"Hello, World!"* ]]; then
+          if [[ "$output" == *"Hello World!"* ]]; then
             echo "Container output: $output"
             echo "::set-output name=push_container::true"
           else
-            echo "Container output does not contain 'Hello, World!'"
+            echo "Container output does not contain 'Hello World!'"
             echo "::set-output name=push_container::false"
             exit 1
           fi
