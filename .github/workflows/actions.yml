@@ -46,13 +46,13 @@ jobs:
       - name: Build and run the container
         id: build
         run: |
-          docker build -t my-java-app .
-          docker run --name my-app-container my-java-app
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }} .
+          docker run --name java-app ${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
 
       - name: Check output
         id: check_output
         run: |
-          output=$(docker logs my-app-container)
+          output=$(docker logs java-app)
           if [[ "$output" == *"Hello World!"* ]]; then
             echo "Container output: $output"
             echo "::set-output name=push_container::true"
@@ -68,7 +68,7 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
-          cache-from: type=local,src=java-app
+          cache-from: type=local,src=${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
 
 
       - name: Commit and push new pom version
