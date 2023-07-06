@@ -8,8 +8,8 @@ RUN mvn test
 
 RUN mvn clean package
 
-From openjdk:11.0.4-jre-slim
+FROM openjdk:11.0.4-jre-slim
 
-COPY --from=builder ./target /usr/app/Calculator-1.0-SNAPSHOT.jar
+COPY --from=builder /usr/src/app/target/ /usr/app/simple-java-maven-appv1.0.4.jar
 
-CMD ["java", "-jar", "/usr/app/Calculator-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/usr/app/simple-java-maven-appv1.0.4.jar"]
