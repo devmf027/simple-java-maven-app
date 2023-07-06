@@ -66,7 +66,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: dardevops/java-app:${{ steps.tag_action.outputs.new_tag }}
+          tags: dardevops/java-app:v1.0.6
 
 
       - name: Update dependency graph
