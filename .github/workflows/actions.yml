@@ -53,23 +53,12 @@ jobs:
         id: check_output
         run: |
           output=$(docker logs java-app)
-          if [[ "$output" == *"Hello World!"* ]]; then
-            echo "Container output: $output"
-            echo "::set-output name=push_container::true"
-          else
-            echo "Container output does not contain 'Hello World!'"
-            echo "::set-output name=push_container::false"
+          if [[ "$output" != *"Hello World!"* ]]; then
             exit 1
           fi
 
       - name: Push to Docker Hub
-        if: steps.check_output.outputs.push_container == 'true'
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
-          cache-from: type=local,src=${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
-
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
 
       - name: Commit and push new pom version
         env:
