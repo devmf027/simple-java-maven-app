@@ -68,7 +68,8 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/java-app:${{ steps.tag_action.outputs.new_tag }}
-          build-args: VERSION=${{ steps.tag_action.outputs.new_tag }}
+          cache-from: type=local,src=java-app
+
 
       - name: Commit and push new pom version
         env:
