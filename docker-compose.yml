@@ -1,4 +1,4 @@
 version: '3.8'
 services:
   weather-app:
-    image: dardevops/java-app:${PROJECT_VERSION}
+    image: dardevops/java-app:latest
