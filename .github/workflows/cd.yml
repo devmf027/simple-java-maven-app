@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CD with Maven
 on:
   pull_request_review:
     types:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3 # Checkout the repository
 
       - name: Set current version
-        run: PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)" >> $GITHUB_ENV
 
 
       - name: Set up QEMU
@@ -30,4 +30,4 @@ jobs:
 
       - name: Execute Docker Compose file remotely
         run: |
-          ssh -i production_ssh_key.pem ubuntu@3.85.63.41 "docker-compose -f ~/docker-compose.yml up -d"
+          ssh -i production_ssh_key.pem ubuntu@3.85.63.41 "PROJECT_VERSION=${{ env.PROJECT_VERSION }} && docker-compose -f ~/docker-compose.yml up -d"
