@@ -26,8 +26,7 @@ jobs:
         run: |
           echo "${{ secrets.PRODUCTION_SSH_KEY }}" > production_ssh_key.pem
           chmod 400 production_ssh_key.pem
-          ssh-keyscan -H 3.85.63.41 >> ~/.ssh/known_hosts
-          scp -i production_ssh_key.pem docker-compose.yml ubuntu@3.85.63.41:~/docker-compose.yml
+          scp -o StrictHostKeyChecking=no -i production_ssh_key.pem docker-compose.yml ubuntu@3.85.63.41:~/docker-compose.yml
 
       - name: Execute Docker Compose file remotely
         run: |
