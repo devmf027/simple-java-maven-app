@@ -4,7 +4,7 @@
     <groupId>com.mycompany.app</groupId>
     <artifactId>simple-java-maven-app</artifactId>
     <packaging>jar</packaging>
-    <version>v1.0.23</version>
+    <version>v1.0.24</version>
     <name>simple-java-maven-app</name>
     <url>https://maven.apache.org</url>
     <dependencies>
