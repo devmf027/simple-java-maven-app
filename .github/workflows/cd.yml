@@ -1,2 +1,23 @@
-  on:
-  jobs:
+name: Java CI with Maven
+on:
+  pull_request_review:
+    types:
+      - submitted
+    branches: [ "development" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+      - uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+      - uses: docker/setup-buildx-action@v2
+
+      - name: Run the container
+        run: |
+          scp -i secrets.PRODUCTION_SSH_KEY docker-compose.yaml ubuntu@3.85.63.41:~/docker-compose.yaml
+      - name: Execute Docker Compose file remotely
+        run: |
+          ssh -i secrets.PRODUCTION_SSH_KEY ubuntu@3.85.63.41 "docker-compose -f ~/docker-compose.yaml up -d"
