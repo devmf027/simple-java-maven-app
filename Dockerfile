@@ -7,3 +7,4 @@ RUN mvn clean package
 FROM openjdk:11.0.4-jre-slim
 COPY --from=builder /usr/src/app/target/*.jar /usr/app/*.jar
 CMD ["java", "-jar", "/usr/app/*.jar"]
+#
