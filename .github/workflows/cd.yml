@@ -30,4 +30,4 @@ jobs:
 
       - name: Execute Docker Compose file remotely
         run: |
-          ssh -i production_ssh_key.pem ubuntu@3.85.63.41 "PROJECT_VERSION=${{ env.PROJECT_VERSION }} && docker-compose -f ~/docker-compose.yml up -d"
+          ssh -i production_ssh_key.pem ubuntu@3.85.63.41 "PROJECT_VERSION=${{ env.PROJECT_VERSION }} && docker compose -f ~/docker-compose.yml up -d"
